@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Problem-1</title>
+	<style>
+		body {  
+    		height: 100%;
+		}
+		.wrapper {
+		    border:1px solid;
+		    width: 800px;
+		    margin: 30px auto;
+		    text-align: center;
+		}
+		h2 {
+		    font-family: "Roboto", sans-serif;
+		    font-weight: 100;
+		    font-size: 2em;
+		    text-transform: uppercase;
+		}
+		#seconds,
+		#minutes,
+		#dots {
+		    font-size: 5em;
+		    font-weight: bold;
+		}
+		button {
+		    border-radius: 5px;
+		    border: solid 1px black;
+		    text-decoration: none;
+		    cursor: pointer;
+		    font-size: 1.2em;
+		    padding: 18px 10px;
+		    width: 150px;
+		    margin: 10px;
+		    outline: none;
+		    margin-top: 20px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+        <h2><strong>Privado Timer</strong></h2>
+         
+        <p>
+            <span id="minutes">00</span>
+            <span id="dots">:</span>
+            <span id="seconds">00</span>
+        </p>
+        <button id="button">Start</button>
+    </div>
+
+	<script type="text/javascript">
+		window.onload = function () {
+	    let minutes = 00 ;
+	    let seconds = 00 ;
+	    var max_time = 5;
+	    let appendSeconds = document.getElementById("seconds");
+	    let appendMinutes = document.getElementById("minutes");
+	    let Interval;
+	    var onclick = clickUpdates();
+	    var btn = document.getElementById("button");
+	    btn.addEventListener("click", onclick, false);
+
+	    function clickUpdates() { 
+	      var count = 0;
+	      var next = function() {
+	          switch(count) {
+	              case 0:
+	                clearInterval(Interval);
+	                Interval = setInterval(startTimer, 1000);
+	                btn.textContent = "Pause";
+	                break;
+	              case 1:
+	                if(minutes < max_time){
+	                  clearInterval(Interval);
+	                  btn.textContent = "Start";
+	                }
+	                else{
+	                  clearInterval(Interval);
+	                  seconds = "00";
+	                  minutes = "00";
+	                  appendSeconds.innerHTML = seconds;
+	                  appendMinutes.innerHTML = minutes;
+	                  btn.textContent = "Start";
+	                }
+	              break;
+	          }
+	         count = count===0?1:0;
+	      }
+	    
+	    return next;
+	  }  
+	    
+
+	    function startTimer() {
+	        seconds++;
+	        if (seconds < 9) {
+	            appendSeconds.innerHTML = "0" + seconds;
+	        }
+	        if (seconds > 9) {
+	            appendSeconds.innerHTML = seconds;
+	        }
+	        if (seconds > 60) {
+	            
+	            minutes++;
+	            appendMinutes.innerHTML = "0" + minutes;
+	            seconds = 0;
+	            appendSeconds.innerHTML = "0" + 0;
+	        }
+	        if (minutes > 9) {
+	            appendMinutes.innerHTML = minutes;
+	        }
+	        if(minutes >= max_time){
+	          appendMinutes.style.color = "red";
+	          appendSeconds.style.color = "red";
+	          document.getElementById("dots").style.color = "red";
+	          btn.textContent="Reset";
+	        }
+	        if(minutes < max_time) {
+	          appendMinutes.style.color = "black";
+	          appendSeconds.style.color = "black";
+	          document.getElementById("dots").style.color = "black";
+	        }
+	 
+	    }
+	};
+
+	</script>
+</body>
+</html>
